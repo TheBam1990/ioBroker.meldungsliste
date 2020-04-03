@@ -1,0 +1,100 @@
+{
+	"common": {
+		"name": "meldungsliste",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "meldungsliste",
+		"titleLang": {
+			"en": "meldungsliste",
+			"de": "Meldungsliste",
+			"ru": "meldungsliste",
+			"pt": "meldungsliste",
+			"nl": "meldungsliste",
+			"fr": "meldungsliste",
+			"it": "meldungsliste",
+			"es": "meldungsliste",
+			"pl": "meldungsliste",
+			"zh-cn": "融合"
+		},
+		"desc": {
+			"en": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
+			"de": "Um mehrere Werte mit Texten zu hören und als eine Anzeige lassen.",
+			"ru": "Прошу прощения за то, что вы написали текст, а также за его пределами.",
+			"pt": "Um mehrere Werte mit Texten zu versehen and aline anineigen lassen.",
+			"nl": "Um mehrere Werte mit Texten zu versehen und as eine anzeigen lassen.",
+			"fr": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
+			"it": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
+			"es": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
+			"pl": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
+			"zh-cn": "嗯，我的文字和音乐的拉森。"
+		},
+		"authors": [
+			"TheBam <elektrobam@gmx.de>"
+		],
+		"keywords": [
+			"Meldungen",
+			"Servicemeldungen",
+			"Fehlerliste"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "meldungsliste.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/TheBam1990/ioBroker.meldungsliste/master/admin/meldungsliste.png",
+		"readme": "https://github.com/TheBam1990/ioBroker.meldungsliste/blob/master/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "alarm",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "poll",
+		"materialize": true,
+		"dependencies": [
+			{
+				"js-controller": ">=1.4.2"
+			}
+		]
+	},
+	"native": {
+		"option1": true,
+		"option2": "42"
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Device or service connected",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		}
+	]
+}
