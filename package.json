@@ -1,5 +1,5 @@
 {
-  "name": "iobroker.meldungsliste",
+  "name": "meldungsliste",
   "version": "0.0.1",
   "description": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
   "author": {
