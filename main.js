@@ -4,16 +4,23 @@
  * Created with @iobroker/create-adapter v1.23.0
  */
 
-// The adapter-core module gives you access to the core ioBroker functions
+// Über das Adapter-Core-Modul haben Sie Zugriff auf die ioBroker-Kernfunktionen
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
+//setInterval(function(){
+	//	class Meldungsliste extends utils.Adapter
+
+//}, 3000);
 
 class Meldungsliste extends utils.Adapter {
 
-	/**
+
+
+
+	/* *
 	 * @param {Partial<ioBroker.AdapterOptions>} [options={}]
 	 */
 	constructor(options) {
@@ -26,68 +33,140 @@ class Meldungsliste extends utils.Adapter {
 		this.on("stateChange", this.onStateChange.bind(this));
 		// this.on("message", this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
+		
+		this.i = 1;
 	}
 
 	/**
 	 * Is called when databases are connected and adapter received configuration.
 	 */
+	
 	async onReady() {
 		// Initialize your adapter here
-
-		// Reset the connection indicator during startup
-		this.setState("info.connection", false, true);
-
-		// The adapters config (in the instance object everything under the attribute "native") is accessible via
+		
+//var test1= this.getState("ping.0.iobroker-ODROID-H2.192_168_2_171");
+//var test1= this.getState("ping.0.iobroker-ODROID-H2.192_168_2_171").val;
+		// Auf die Adapterkonfiguration (im Instanzobjekt alles unter dem Attribut "native") kann über zugegriffen werden
 		// this.config:
-		this.log.info("config option1: " + this.config.option1);
-		this.log.info("config option2: " + this.config.option2);
+		//this.log.info("Test log: " + this.config.devices.length);
+		this.log.info("Test: " + JSON.stringify(this.config))
+		this.log.info("Länge: " + JSON.stringify(this.config.devices.length))
+		this.log.info("Intervall: " + JSON.stringify(this.config.interval))
+		this.log.info("Wert 1 name: " + JSON.stringify(this.config.devices[0].name))
+		this.log.info("Wert 1 if anweisung: " + JSON.stringify(this.config.devices[0].if))
+		this.log.info("Wert 1 meldetext: " + JSON.stringify(this.config.devices[0].room))
+		//this.log.info("Abfrage von systemadapter ping: " + JSON.stringify(this.getObjectAsync("ping.0.iobroker-ODROID-H2.192_168_2_171")))
+		//var linkedObjState = await this.getForeignStateAsync("ping.0.iobroker-ODROID-H2.192_168_2_171");
 
+		//	this.log.info("Abfrage von systemadapter ping: " + JSON.stringify(linkedObjState.val))
+		//this.log.info("Abfrage von systemadapter ping: " + JSON.stringify(this.getForeignObjectAsync("ping.0.iobroker-ODROID-H2.192_168_2_171")))
+		//this.log.info("Wert 1: " + this.getState("ping.0.iobroker-ODROID-H2.192_168_2_171", val))
+		//this.log.info("Wert 1: " + JSON.stringify(zw))
+		//this.log.info("Abfrage von ping.ip: " + JSON.stringify(this.getState("ping.0.iobroker-ODROID-H2.192_168_2_171")))
+	//this.log.info("Test länge: " + this.config.devices.length);
+	//this.log.info("Test interval: " + this.adapter.config.interval);
+
+
+    
+
+		
 		/*
-		For every state in the system there has to be also an object of type state
-		Here a simple template for a boolean variable named "testVariable"
-		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
+		Für jeden Zustand im System muss es auch ein Objekt vom Typ Zustand geben
+		Hier eine einfache Vorlage für eine boolesche Variable namens "testVariable"
+		Da jede Adapterinstanz ihre eigenen eindeutigen Namespace-Variablennamen verwendet, können diese nicht mit anderen Adaptervariablen kollidieren
 		*/
-		await this.setObjectAsync("testVariable", {
+		
+		await this.setObjectAsync("Meldungen", {
 			type: "state",
 			common: {
-				name: "testVariable",
-				type: "boolean",
-				role: "indicator",
+				name: "Meldungen",
+				type: "string",
+				role: "state",
+				def: 0,
 				read: true,
-				write: true,
+				write: true
 			},
 			native: {},
 		});
 
-		// in this template all states changes inside the adapters namespace are subscribed
+		// In dieser Vorlage werden alle Statusänderungen im Adapter-Namespace abonniert
 		this.subscribeStates("*");
 
 		/*
-		setState examples
-		you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
+		setState Beispiele
+		Sie werden feststellen, dass jeder setState das stateChange-Ereignis auslöst (aufgrund des obigen subscribeStates-cmd).
 		*/
-		// the variable testVariable is set to true as command (ack=false)
-		await this.setStateAsync("testVariable", true);
+		//Die Variable testVariable wird als Befehl auf true gesetzt (ack = false).
+		//await this.setStateAsync("Meldungen", adapter.config.devices.length);
+//setInterval(function() { 
+     
 
-		// same thing, but the value is flagged "ack"
-		// ack should be always set to true if the value is received from or acknowledged from the target system
-		await this.setStateAsync("testVariable", { val: true, ack: true });
+		// das Gleiche, aber der Wert ist mit "ack" gekennzeichnet.
+		// ack sollte immer auf true gesetzt werden, wenn der Wert vom Zielsystem empfangen oder bestätigt wird
+		//await this.setStateAsync("Meldungen", { val: adapter.config.data-index, ack: true });
+		//await this.setStateAsync("Meldungen", { val: this.config.devices.length, ack: true });
+		//await this.setState("Meldungen", { val: "test", ack: true });
+		//await this.setStateAsync("Meldungen", { val: true, ack: true });
+		//await this.setStateAsync("Meldungen", true);
+		//await this.setStateAsync("Meldungen", { val: true, ack: true });
+		//await this.setState("Meldungen", { val: "test", ack: true });
+		 //this.setStateAsync("Meldungen", { val: this.config.devices.length, ack: true });
+		 //await this.setStateAsync("Meldungen", { val: this.config.devices.length, ack: true });
+		  //this.setState("Meldungen", { val: this.config.devices.length, ack: true });
+		  //await this.setStateAsync("Meldungen", this.config.devices.length);   		//hier klappt es
+		  //await this.setStateAsync("Meldungen", { val: this.config.devices[0].room, ack: true });
+		  await this.setStateAsync("Meldungen", this.config.devices[0].room); 
+		  	
+	
 
-		// same thing, but the state is deleted after 30s (getState will return null afterwards)
-		await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
+		// das gleiche, aber der Status wird nach 30s gelöscht (getState gibt danach null zurück)
+		//await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
 
-		// examples for the checkPassword/checkGroup functions
-		let result = await this.checkPasswordAsync("admin", "iobroker");
+		// Beispiele für die Funktionen checkPassword / checkGroup
+		/*let result = await this.checkPasswordAsync("admin", "iobroker");
 		this.log.info("check user admin pw iobroker: " + result);
 
 		result = await this.checkGroupAsync("admin", "admin");
 		this.log.info("check group user admin group admin: " + result);
-	}
+	this.setStateAsync("Meldungen", true);
+	//await this.setState("Meldungen", { val: this.adapter.config.devices.length, ack: true });*/
+	//await this.setState("Meldungen", { val: this.config.devices.length, ack: true });
+	const callback = (i) => {
+	this.log.info('interval run ' + i);
+	//this.on("ready", this.onReady.bind(this));
+	//this.setState("Meldungen", { val: this.config.devices[0].room});
+	
+	/*
+				var linkedObjState = await this.getForeignStateAsync(this.config.devices[0].name);
+			var abfrage=this.config.devices[0].if;	
+			var boolValue = (/true/i).test(abfrage)
+	 //Ab hier eigentlicher Code
+	//var linkedObjState = await this.getForeignStateAsync(this.config.devices[0].name);
+	if(linkedObjState.val == boolValue){
+	this.setState("Meldungen", { val: this.config.devices[0].room});
+	this.log.info("Wert 1 meldetext: " + JSON.stringify(this.config.devices[0].room));
+	} else {
+	this.setState("Meldungen", { val: "0"});
+	this.log.info("Wert 1 meldetext test " + linkedObjState.val);
+	this.log.info("Wert 1 if anweisung: " + JSON.stringify(boolValue))
+	}   */
+}
+
+setInterval(() => {
+callback(this.i); 
+this.i++;
+}, this.config.interval);
+	
+
 
 	/**
-	 * Is called when adapter shuts down - callback has to be called under any circumstances!
+	 * Wird aufgerufen, wenn der Adapter heruntergefahren wird - Rückruf muss unter keinen Umständen aufgerufen werden!
 	 * @param {() => void} callback
 	 */
+	 }
+	 
+
+	 
 	onUnload(callback) {
 		try {
 			this.log.info("cleaned everything up...");
@@ -98,7 +177,7 @@ class Meldungsliste extends utils.Adapter {
 	}
 
 	/**
-	 * Is called if a subscribed object changes
+	 * Wird aufgerufen, wenn sich ein abonniertes Objekt ändert
 	 * @param {string} id
 	 * @param {ioBroker.Object | null | undefined} obj
 	 */
@@ -113,14 +192,14 @@ class Meldungsliste extends utils.Adapter {
 	}
 
 	/**
-	 * Is called if a subscribed state changes
+	 * Wird aufgerufen, wenn sich ein abonnierter Status ändert
 	 * @param {string} id
 	 * @param {ioBroker.State | null | undefined} state
 	 */
 	onStateChange(id, state) {
 		if (state) {
 			// The state was changed
-			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+			//this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);		//Schreibt änderung vom Objekt ins LOG
 		} else {
 			// The state was deleted
 			this.log.info(`state ${id} deleted`);
@@ -146,14 +225,45 @@ class Meldungsliste extends utils.Adapter {
 
 }
 
-// @ts-ignore parent is a valid property on module
+// @ts-ignore parent ist eine gültige Eigenschaft für das Modul
 if (module.parent) {
-	// Export the constructor in compact mode
+	// Exportieren Sie den Konstruktor im kompakten Modus
 	/**
 	 * @param {Partial<ioBroker.AdapterOptions>} [options={}]
 	 */
 	module.exports = (options) => new Meldungsliste(options);
 } else {
-	// otherwise start the instance directly
+	// Andernfalls starten Sie die Instanz direkt
 	new Meldungsliste();
 }
+
+
+function auslesen (){
+var linkedObjState = await this.getForeignStateAsync(this.config.devices[0].name);
+			var abfrage=this.config.devices[0].if;	
+			var boolValue = getBoolean(abfrage); //returns true
+function getBoolean(value){
+   switch(value){
+        case true:
+        case "true":
+        case 1:
+        case "1":
+        case "on":
+        case "yes":
+            return true;
+        default: 
+            return false;
+    }
+}
+	 //Ab hier eigentlicher Code
+	//var linkedObjState = await this.getForeignStateAsync(this.config.devices[0].name);
+	if(linkedObjState.val == boolValue){
+	this.setState("Meldungen", { val: this.config.devices[0].room});
+	this.log.info("Wert 1 meldetext: " + JSON.stringify(this.config.devices[0].room));
+	} else {
+	this.setState("Meldungen", { val: "0"});
+	this.log.info("Wert 1 meldetext test " + linkedObjState.val);
+	this.log.info("Wert 1 if anweisung: " + JSON.stringify(boolValue))
+	}
+}
+

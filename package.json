@@ -5,6 +5,7 @@
   "author": {
     "name": "TheBam",
     "email": "elektrobam@gmx.de"
+	
   },
   "homepage": "https://github.com/TheBam1990/ioBroker.meldungsliste",
   "license": "MIT",
@@ -51,4 +52,5 @@
     "url": "https://github.com/TheBam1990/ioBroker.meldungsliste/issues"
   },
   "readmeFilename": "README.md"
+  
 }
