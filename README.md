@@ -5,16 +5,14 @@
 [![Downloads](https://img.shields.io/npm/dm/iobroker.meldungsliste.svg)](https://www.npmjs.com/package/iobroker.meldungsliste)
 ![Number of Installations (latest)](http://iobroker.live/badges/meldungsliste-installed.svg)
 ![Number of Installations (stable)](http://iobroker.live/badges/meldungsliste-stable.svg)
-[![Dependency Status](https://img.shields.io/david/TheBam1990/iobroker.meldungsliste.svg)](https://david-dm.org/TheBam1990/iobroker.meldungsliste)
-[![Known Vulnerabilities](https://snyk.io/test/github/TheBam1990/ioBroker.meldungsliste/badge.svg)](https://snyk.io/test/github/TheBam1990/ioBroker.meldungsliste)
+[![Dependency Status](https://img.shields.io/david/thebam/iobroker.meldungsliste.svg)](https://david-dm.org/thebam/iobroker.meldungsliste)
+[![Known Vulnerabilities](https://snyk.io/test/github/thebam/ioBroker.meldungsliste/badge.svg)](https://snyk.io/test/github/thebam/ioBroker.meldungsliste)
 
 [![NPM](https://nodei.co/npm/iobroker.meldungsliste.png?downloads=true)](https://nodei.co/npm/iobroker.meldungsliste/)
 
-**Tests:**: [![Travis-CI](http://img.shields.io/travis/TheBam1990/ioBroker.meldungsliste/master.svg)](https://travis-ci.org/TheBam1990/ioBroker.meldungsliste)
-
 ## meldungsliste adapter for ioBroker
 
-Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.
+servicemeldungen
 
 ## Developer manual
 This section is intended for the developer. It can be deleted later
@@ -23,11 +21,23 @@ This section is intended for the developer. It can be deleted later
 
 You are almost done, only a few steps left:
 1. Create a new repository on GitHub with the name `ioBroker.meldungsliste`
+1. Initialize the current folder as a new git repository:  
+	```bash
+	git init
+	git add .
+	git commit -m "Initial commit"
+	```
+1. Link your local repository with the one on GitHub:  
+	```bash
+	git remote add origin https://github.com/thebam/ioBroker.meldungsliste
+	```
 
-1. Push all files to the GitHub repo. The creator has already set up the local repository for you:  
+1. Push all files to the GitHub repo:  
 	```bash
 	git push origin master
 	```
+1. Add a new secret under https://github.com/thebam/ioBroker.meldungsliste/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
+
 1. Head over to [main.js](main.js) and start programming!
 
 ### Best Practices
@@ -41,6 +51,7 @@ Several npm scripts are predefined for your convenience. You can run them using 
 | `test:js`   | Executes the tests you defined in `*.test.js` files.     |
 | `test:package`    | Ensures your `package.json` and `io-package.json` are valid. |
 | `test` | Performs a minimal test run on package files and your tests. |
+| `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
 
 ### Writing tests
 When done right, testing code is invaluable, because it gives you the 
@@ -81,12 +92,12 @@ For later updates, the above procedure is not necessary. Just do the following:
 ## Changelog
 
 ### 0.0.1
-* (TheBam) initial release
+* (thebam) initial release
 
 ## License
 MIT License
 
-Copyright (c) 2020 TheBam <elektrobam@gmx.de>
+Copyright (c) 2020 thebam <elektrobam@gmx.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

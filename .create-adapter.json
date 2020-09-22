@@ -1,0 +1,35 @@
+{
+	"cli": true,
+	"adapterName": "meldungsliste",
+	"title": "meldungsliste",
+	"description": "servicemeldungen",
+	"expert": "yes",
+	"features": [
+		"adapter"
+	],
+	"adminFeatures": [],
+	"type": "logic",
+	"startMode": "daemon",
+	"connectionType": "local",
+	"dataSource": "assumption",
+	"connectionIndicator": "yes",
+	"language": "JavaScript",
+	"tools": [
+		"ESLint",
+		"type checking"
+	],
+	"indentation": "Tab",
+	"quotes": "double",
+	"es6class": "yes",
+	"authorName": "thebam",
+	"authorGithub": "thebam",
+	"authorEmail": "elektrobam@gmx.de",
+	"gitRemoteProtocol": "HTTPS",
+	"gitCommit": "no",
+	"license": "MIT License",
+	"ci": [
+		"gh-actions"
+	],
+	"dependabot": "yes",
+	"creatorVersion": "1.28.0"
+}

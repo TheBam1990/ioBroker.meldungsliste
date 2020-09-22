@@ -16,12 +16,12 @@
 				"zh-cn": "首次出版"
 			}
 		},
-		"title": "meldungsliste adapter",
+		"title": "meldungsliste",
 		"titleLang": {
 			"en": "meldungsliste",
 			"de": "Meldungsliste",
-			"ru": "meldungsliste",
-			"pt": "meldungsliste",
+			"ru": "Meldungsliste",
+			"pt": "Meldungsliste",
 			"nl": "meldungsliste",
 			"fr": "meldungsliste",
 			"it": "meldungsliste",
@@ -30,19 +30,19 @@
 			"zh-cn": "融合"
 		},
 		"desc": {
-			"en": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
-			"de": "Um mehrere Werte mit Texten zu hören und als eine Anzeige lassen.",
-			"ru": "Прошу прощения за то, что вы написали текст, а также за его пределами.",
-			"pt": "Um mehrere Werte mit Texten zu versehen and aline anineigen lassen.",
-			"nl": "Um mehrere Werte mit Texten zu versehen und as eine anzeigen lassen.",
-			"fr": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
-			"it": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
-			"es": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
-			"pl": "Um mehrere Werte mit Texten zu versehen und als eine anzeigen lassen.",
-			"zh-cn": "嗯，我的文字和音乐的拉森。"
+			"en": "servicemeldungen",
+			"de": "Servicemeldungen",
+			"ru": "servicemeldungen",
+			"pt": "servicemeldungen",
+			"nl": "servicemeldungen",
+			"fr": "servicemeldungen",
+			"it": "servicemeldungen",
+			"es": "servicemeldungen",
+			"pl": "servicemeldungen",
+			"zh-cn": "服务中心"
 		},
 		"authors": [
-			"TheBam <elektrobam@gmx.de>"
+			"thebam <elektrobam@gmx.de>"
 		],
 		"keywords": [
 			"Meldungen",
@@ -54,14 +54,14 @@
 		"main": "main.js",
 		"icon": "meldungsliste.png",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/TheBam1990/ioBroker.meldungsliste/master/admin/meldungsliste.png",
-		"readme": "https://github.com/TheBam1990/ioBroker.meldungsliste/blob/master/README.md",
+		"extIcon": "https://raw.githubusercontent.com/thebam/ioBroker.meldungsliste/master/admin/meldungsliste.png",
+		"readme": "https://github.com/thebam/ioBroker.meldungsliste/blob/master/README.md",
 		"loglevel": "info",
 		"mode": "daemon",
-		"type": "alarm",
+		"type": "logic",
 		"compact": true,
 		"connectionType": "local",
-		"dataSource": "poll",
+		"dataSource": "assumption",
 		"materialize": true,
 		"dependencies": [
 			{
@@ -70,11 +70,42 @@
 		]
 	},
 	"native": {
+		"option2": "42",
+		"interval": "5000",
 		"option1": true,
-		"option2": "42"
+		"Date": false,
+		"time": false,
+		"shorts_in": [
+		  {
+			"name": "spiel_test_objekt",
+			"name_id": "0_userdata.0.spiel_test_objekt",
+			"if": "true",
+			"room": "zeile 1 meldung"
+		  },
+		  {
+			"name": "test wert",
+			"name_id": "0_userdata.0.test_wert",
+			"if": "true",
+			"room": ""
+		  },
+		  {
+			"name": "spiel_test_objekt",
+			"name_id": "0_userdata.0.spiel_test_objekt",
+			"if": "false",
+			"room": "wenn das dann doof"
+		  }
+		]
 	},
-	"objects": [
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		}
+		
 	]
-
-	
 }

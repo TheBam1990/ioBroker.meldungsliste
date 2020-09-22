@@ -4,6 +4,7 @@ node_modules/
 nbproject/
 .vs*/
 *.code-workspace
+.create-adapter.json
 Thumbs.db
 gulpfile.js
 
@@ -14,6 +15,14 @@ travis/
 appveyor.yml
 .travis.yaml
 appveyor.yaml
+
+# Type checking configuration
+tsconfig.json
+tsconfig.*.json
+
+# ESLint configuration
+.eslintrc.json
+.eslintrc.js
 
 # npm package files
 iobroker.*.tgz
