@@ -127,10 +127,8 @@ function tableOnReady() {
     $('.table-button-add').on('click', function () {
     if($(this).attr('id') === 'shorts_in_table'){
             const shorts_in = table2values('shorts_in');
-            let id_s = 0;
-            for (let i = 0; i < shorts_in.length; i++) {
-                id_s = id_s +1;
-            }
+            let id_s = shorts_in.length;
+
             initSelectId(function (sid) {
                 sid.selectId('show', $('#shorts_in .values-input[data-name="name"][data-index="' + id_s + '"]').val(), function (newId) {
                     if (newId) {
