@@ -2,135 +2,325 @@
 
 <head>
 
-	<!-- Load ioBroker scripts and styles-->
-		<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+    <!-- Load ioBroker scripts and styles-->
+    <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
     <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/css/fancytree/ui.fancytree.min.css"/>
 
     <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
-
+    <script type="text/javascript" src="../../lib/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery.fancytree-all.min.js"></script>
+    <script type="text/javascript" src="../../lib/js/selectID.js"></script>
     <script type="text/javascript" src="../../js/translate.js"></script>
     <script type="text/javascript" src="../../lib/js/materialize.js"></script>
-	
-	<link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
-	<script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
-	<script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
-	<script type="text/javascript" src="../../js/translate.js"></script>
-	<script type="text/javascript" src="../../js/adapter-settings.js"></script>
-	<script type="text/javascript" src="words.js"></script>
-	
+    <!-- Load our own files -->
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="words.js"></script>
 
+    <script type="text/javascript">
 
-	<!-- Load our own files -->
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<script type="text/javascript" src="words.js"></script>
+    const states = {};
+    let selectId;
 
-	<script type="text/javascript">
-  var devices = [];
-
-    function setValue(id, value, onChange) {
-        var $value = $('#' + id + '.value');
-        if ($value.attr('type') === 'checkbox') {
-            $value.prop('checked', value).change(function() {
-                onChange();
-            });
-        } else {
-            $value.val(value).change(function() {
-                onChange();
-            }).keyup(function() {
-                // Check that only numbers entered
-                if ($(this).hasClass('number')) {
-                    var val = $(this).val();
-                    if (val) {
-                        var newVal = '';
-                        for (var i = 0; i < val.length; i++) {
-                            if (val[i] >= '0' && val[i] <= '9') {
-                                newVal += val[i];
-                            }
-                        }
-
-                        if (val != newVal) $(this).val(newVal);
-                    }
-                }
-
-                onChange();
-            });
-        }
-    }
-
-    // the function loadSettings has to exist ...
-    function load(settings, onChange) {
+    // This will be called by the admin adapter when the settings page loads
+   function load(settings, onChange) {
+        // example: select elements with id=key and class=value and insert value
         if (!settings) return;
+        //if (settings.sayit === undefined) settings.sayit = '';
 
-        if (settings.noHostname === undefined) settings.noHostname = false;
+        shorts_in = settings.shorts_in    || [];
+       
+        if(typeof settings.sayit !== 'object') sayit = [];
 
-        devices = settings.devices || [];
-
-        for (var key in settings) {
-            if (settings.hasOwnProperty(key)) setValue(key, settings[key], onChange);
-        }
-
-        values2table('values', devices, onChange);
+        $('.value').each(function () {
+            const $key = $(this);
+            const id = $key.attr('id');
+            if ($key.attr('type') === 'checkbox') {
+                // do not call onChange direct, because onChange could expect some arguments
+                $key.prop('checked', settings[id])
+                    .on('change', () => onChange())
+                ;
+            } else {
+                // do not call onChange direct, because onChange could expect some arguments
+                $key.val(settings[id])
+                    .on('change', () => onChange())
+                    .on('keyup', () => onChange())
+                ;
+            }
+        });
 
         onChange(false);
-    }
+        // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+        if (M) M.updateTextFields();
+        $('.timepicker').timepicker({
+          "twelveHour":false
+        });
 
+        $('.tooltipped').tooltip();
+
+        values2table('shorts_in', shorts_in, onChange, tableOnReady);
+        values2table('states', states);
+
+        $('.sendTo_Chips').chips({
+            placeholder: 'Add adapter',
+            secondaryPlaceholder: '+instance'
+        });
+        // sendTo Chips
+        $('#add_sendTo').on('click', () => {
+            initSelectId( (sid) => {
+                sid.selectId('show', (newId) => {
+                    if (newId) {
+                        $('.sendTo_Chips').chips('addChip', {tag: newId});
+                        onChange();
+                    }
+                });
+            });
+        });
+        list2chips('.sendTo_Chips', settings.sendTo || '', onChange);
+
+        $('#sayit_help').on('click', ()=> {
+          showMessage('Bitte einen state auswählen, wo Sie sicher sind, dass dieser mit einem Text zur Sprachausgabe beschrieben werden kann! Als Beispiel sayit.0.tts.text. Als Optionen zur Ausgabe, stehen die unten stehenden Sätze mit der entsprechenden Nummer zu Verfügung.');
+        });
+        $('#test_sayit').on('click', ()=>{
+                			const tts_instance = table2values('sayit');
+                			if(tts_instance){
+                        tts_instance.forEach((ele) => {
+                          socket.emit('setState', ele.name_id, 'dies ist eine Testnachricht vom Alarm Adapter', (err)=>{
+        					                     if(err)console.log(err);
+        				                      });
+                        });
+
+                			}
+                			else showMessage('Nichts konfiguriert!')
+        });
+    }  
+    
+    //######  END LOAD  #######
+
+    //###########  SAVE  #########
+
+    // This will be called by the admin adapter when the user presses the save button
     function save(callback) {
-        var obj = {};
+        // example: select elements with class=value and build settings object
+        const obj = {};
         $('.value').each(function () {
-            var $this = $(this);
+            const $this = $(this); 
             if ($this.attr('type') === 'checkbox') {
                 obj[$this.attr('id')] = $this.prop('checked');
             } else {
                 obj[$this.attr('id')] = $this.val();
             }
         });
-
-        // Get edited table
-        obj.devices = table2values('values');
-
+        obj.shorts_in = table2values('werte');
+        obj.states = states;
         callback(obj);
     }
-	</script>
-</head>
-<body>
-<div id="adapter-container">
-<div class="m adapter-container">
+//##############################################
 
-		<div class="row">
-			<div class="col s12 m4 l2">
-				<img src="meldungsliste.png" class="logo">
-			</div>
-		</div>
-   <!-- <table><tr>-->
-        <td style="font-size:5px;"><h5 class="translate">PING adapter settings</h5></td>
-    </tr></table>
-	
-     <h6 class="translate">List settings</h6>
-    <table>
-         <tr><td><label class="translate" for="interval">Interval[ms]:</label></td><td class="admin-icon"></td><td><input class="value number" id="interval" size="6" /></td></tr>
-       <!-- <tr><td><label class="translate" for="noHostname">No host name in state name:</label></td><td class="admin-icon"></td><td><input class="value" id="noHostname" type="checkbox" /></td></tr> -->
-    </table>
-    <h6 class="translate">Ping addresses</h6>
-    <div id="values" style="width: 100%; height: calc(100% - 230px)">
-        <button class="table-button-add" style="margin-left: 10px; width: 1.5em; height: 1.5em"></button>
-        <div style="width: 100%; height: calc(100% - 30px); overflow: auto;">
-            <table class="table-values" style="width: 100%;">
-                <thead>
-                <tr>
-                    <th data-name="_index"   style="width: 40px" class="translate"></th>
-                    <th data-name="name"     style="width: 30%" class="translate">Name</th>
-                    <th data-name="if"       style="width: 10%" class="translate">IF Bedingung</th>
-                    <th data-name="room" 	style="translate"     class="translate">Room</th>
-                    <th data-buttons="delete" style="width: 40px"></th>
-                </tr>
-                </thead>
-            </table>
+//###########  HELPERS  ###########
+
+function tableOnReady() {
+    $('.table-button-add').on('click', function () {
+    if($(this).attr('id') === 'shorts_in_table'){
+            const shorts_in = table2values('shorts_in');
+            let id_s = 0;
+            for (let i = 0; i < shorts_in.length; i++) {
+                id_s = id_s +1;
+            }
+            initSelectId(function (sid) {
+                sid.selectId('show', $('#shorts_in .values-input[data-name="name"][data-index="' + id_s + '"]').val(), function (newId) {
+                    if (newId) {
+                        console.log(newId);
+                        $('#shorts_in .values-input[data-name="name_id"][data-index="' + id_s + '"]').val(newId).trigger('change');
+                        socket.emit('getObject', newId, function (err, obj) {
+                            const name = getName(obj);
+                            $('#shorts_in .values-input[data-name="name"][data-index="' + id_s + '"]').val(name).trigger('change');
+                        });
+                    }
+                });
+            });
+      
+      } else{
+        console.log('wrong table!');
+      }
+    });
+
+      $('.values-buttons[data-command="edit"]').on('click', function() {
+                  let id = $(this).data('index');
+                  initSelectId(function (sid) {
+                      sid.selectId('show', $('#shorts_in .values-input[data-name="name"][data-index="' + id + '"]').val(), (newId)=> {
+                          if (newId) {
+                              $('#shorts_in .values-input[data-name="name_id"][data-index="' + id + '"]').val(newId).trigger('change');
+                              socket.emit('getObject', newId, (err, obj)=> {
+                                  let name = getName(obj);
+                                  $('#shorts_in .values-input[data-name="name"][data-index="' + id + '"]').val(name).trigger('change');
+                              });
+                          }
+                      });
+                  });
+              });
+
+}
+
+function list2chips(selector,list, onChange) {
+    const chips = list.split(/[,;\s]+/);
+    const data = [];
+    for (let c = 0; c < chips.length; c++) {
+        if (chips[c] && chips[c].trim()) {
+            data.push({tag: chips[c].trim()});
+        }
+    }
+    $(selector).chips({
+        data: data,
+        //placeholder: _('Send Instanz'),
+        //secondaryPlaceholder: _('Add Instanz'),
+        onChipAdd: onChange,
+        onChipDelete: onChange
+    });
+}
+function chips2list(selector) {
+    const data = $(selector).chips('getData');
+    const text = [];
+    for (let lib = 0; lib < data.length; lib++) {
+        text.push(data[lib].tag);
+    }
+    return text.join(' ');
+}
+
+function initSelectId(callback) {
+    if (selectId) {
+        return callback(selectId);
+    }
+    socket.emit('getObjects', (err, objs) => {
+        selectId = $('#dialog-select-member').selectId('init',  {
+            noMultiselect: true,
+            objects: objs,
+            imgPath:       '../../lib/css/fancytree/',
+            filter:        {type: 'state'},
+            name:          'scenes-select-state',
+            texts: {
+                select:          _('Select'),
+                cancel:          _('Cancel'),
+                all:             _('All'),
+                id:              _('ID'),
+                name:            _('Name'),
+                role:            _('Role'),
+                room:            _('Room'),
+                value:           _('Value'),
+                selectid:        _('Select ID'),
+                from:            _('From'),
+                lc:              _('Last changed'),
+                ts:              _('Time stamp'),
+                wait:            _('Processing...'),
+                ack:             _('Acknowledged'),
+                selectAll:       _('Select all'),
+                unselectAll:     _('Deselect all'),
+                invertSelection: _('Invert selection')
+            },
+            columns: ['image', 'name', 'role', 'room']
+        });
+        callback(selectId);
+    });
+}
+
+function getName(obj) {
+    if (obj && obj.common && obj.common.name) {
+        let name = obj.common.name;
+        if (typeof name === 'object') {
+            name = name[systemLang] || name.en;
+        }
+        return name;
+    } else if (obj && obj.name) {
+        let name = obj.name;
+        if (typeof name === 'object') {
+            name = name[systemLang] || name.en;
+        }
+        return name;
+    } else {
+        const parts = obj.id.split('.');
+        const last = parts.pop();
+        return last[0].toUpperCase() + last.substring(1).toLowerCase();
+    }
+}
+//#####################################################
+  </script>
+
+</head>
+
+<body>
+</br>
+</br>
+</br>
+<td style="font-size:5px;"><h5 class="translate">PING adapter settings</h5></td>
+</tr></table>
+
+ <h6 class="translate">List settings</h6>
+<table>
+    
+    <!-- <tr><td><label class="translate" for="interval">Interval[ms]:</label></td><td class="admin-icon"></td><td><input class="value number" id="interval" size="6" /></td></tr>-->
+    <!--   <tr><td><label class="translate" for="Date">Mit Ereigniss Datum</label></td><td class="admin-icon"></td><td><input class="value" id="Date" type="checkbox" /></td></tr>
+     <tr><td><label class="translate" for="time">Mit Ereigniss Uhrzeit</label></td><td class="admin-icon"></td><td><input class="value" id="time" type="checkbox" /></td></tr>-->
+</table>
+<div id="adapter-container">
+    <div class="m adapter-container">
+            <div class="row">
+                <div class="col s12" id="shorts_in">
+                    <div class="row">
+                        <div class="col s2 m1 l1 left">
+                            <a   class="btn-floating waves-effect waves-light blue table-button-add" id="shorts_in_table"><i class="material-icons">add</i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col s12">
+                        <p class=" left translate"> </p>
+                      </div>
+                    </div>
+                    <!--<div class="table-values-div">-->
+                        <table id="werte" class="table-values">
+                            <thead>
+                            <tr>
+                              <th data-name="_index" style="width: 10px; background: #64b5f6; text-align: center" data-style="text-align: center">Nr</th>
+                              <th data-name="name" data-type="text" style="width: 15%; background: #64b5f6" class="translate">Name</th>
+                              <th data-name="name_id" data-type="text" style="width: 15%; background: #64b5f6" class="translate">Object-ID</th>
+                              <th data-buttons="edit" style="width: 20px; background: #64b5f6"></th>
+                              <th data-name="if" style="width: 10%; background: #64b5f6" data-type="select" data-options="true;false;1;0" class="translate">Trigger</th>
+                              <th data-name="room"  style="width: 80%; background: #64b5f6" class="translate">Meldetext</th>
+                              <th data-buttons="delete" style="width: 100px; background: #64b5f6"></th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </br>
+            </br>
+        </br>
+    </br>
+</br>
+</br>
+                </div>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
+        <div class="m material-dialogs">
+            <div id="dialog-select-member" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                  <div class="row">
+                    <div class="col s12 title"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12 dialog-content"></div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <a class="modal-action modal-close waves-effect waves-green btn btn-set"><i class="large material-icons left">check</i><span class="translate">Select</span></a>
+                  <a class="modal-action modal-close waves-effect waves-green btn btn-close"><i class="large material-icons left ">close</i><span class="translate">Cancel</span></a>
+                </div>
+          </div>
+        </div>
+
 </body>
+
 </html>

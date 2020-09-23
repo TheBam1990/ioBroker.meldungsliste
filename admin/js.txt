@@ -1,0 +1,121 @@
+function tableOnReady() {
+    $('.table-button-add').on('click', function () {
+      if($(this).attr('id') === 'circuits_table'){
+        const devices = table2values('circuits');
+        let id_c = 0;
+        for (let i = 0; i < devices.length; i++) {
+            id_c = id_c +1;
+        }
+        initSelectId(function (sid) {
+            sid.selectId('show', $('#circuits .values-input[data-name="name"][data-index="' + id_c + '"]').val(), function (newId) {
+                if (newId) {
+                    console.log(newId);
+                    $('#circuits .values-input[data-name="name_id"][data-index="' + id_c + '"]').val(newId).trigger('change');
+                    socket.emit('getObject', newId, function (err, obj) {
+                        const name = getName(obj);
+                        $('#circuits .values-input[data-name="name"][data-index="' + id_c + '"]').val(name).trigger('change');
+                    });
+                }
+            });
+        });
+      }else if($(this).attr('id') === 'shorts_in_table'){
+            const shorts_in = table2values('shorts_in');
+            let id_s = 0;
+            for (let i = 0; i < shorts_in.length; i++) {
+                id_s = id_s +1;
+            }
+            initSelectId(function (sid) {
+                sid.selectId('show', $('#shorts_in .values-input[data-name="name"][data-index="' + id_s + '"]').val(), function (newId) {
+                    if (newId) {
+                        console.log(newId);
+                        $('#shorts_in .values-input[data-name="name_id"][data-index="' + id_s + '"]').val(newId).trigger('change');
+                        socket.emit('getObject', newId, function (err, obj) {
+                            const name = getName(obj);
+                            $('#shorts_in .values-input[data-name="name"][data-index="' + id_s + '"]').val(name).trigger('change');
+                        });
+                    }
+                });
+            });
+      }else if($(this).attr('id') === 'shorts_table'){
+            const shorts = table2values('shorts');
+            let id_s = 0;
+            for (let i = 0; i < shorts.length; i++) {
+                id_s = id_s +1;
+            }
+            initSelectId(function (sid) {
+                sid.selectId('show', $('#shorts .values-input[data-name="name"][data-index="' + id_s + '"]').val(), function (newId) {
+                    if (newId) {
+                        console.log(newId);
+                        $('#shorts .values-input[data-name="name_id"][data-index="' + id_s + '"]').val(newId).trigger('change');
+                        socket.emit('getObject', newId, function (err, obj) {
+                            const name = getName(obj);
+                            $('#shorts .values-input[data-name="name"][data-index="' + id_s + '"]').val(name).trigger('change');
+                        });
+                    }
+                });
+            });
+      }else if($(this).attr('id') === 'sayit_table'){
+            const sayit = table2values('sayit');
+            let id_say = 0;
+            for (let i = 0; i < sayit.length; i++) {
+                id_say = id_say +1;
+            }
+            initSelectId(function (sid) {
+                sid.selectId('show', $('#sayit .values-input[data-name="name"][data-index="' + id_say + '"]').val(), function (newId) {
+                    if (newId) {
+                        console.log(newId);
+                        $('#sayit .values-input[data-name="name_id"][data-index="' + id_say + '"]').val(newId).trigger('change');
+                        socket.emit('getObject', newId, function (err, obj) {
+                            const name = getName(obj);
+                            $('#sayit .values-input[data-name="name"][data-index="' + id_say + '"]').val(name).trigger('change');
+                        });
+                        $('#sayit .values-input[data-name="opt_say_one"][data-index="' + id_say + '"]').prop( "checked", true).trigger('change');
+                        $('#sayit .values-input[data-name="opt_say_two"][data-index="' + id_say + '"]').prop( "checked", true ).trigger('change');
+                        $('#sayit .values-input[data-name="opt_say_three"][data-index="' + id_say + '"]').prop( "checked", true ).trigger('change');
+                        $('#sayit .values-input[data-name="opt_say_four"][data-index="' + id_say + '"]').prop( "checked", true ).trigger('change');
+                        $('#sayit .values-input[data-name="opt_say_five"][data-index="' + id_say + '"]').prop( "checked", true ).trigger('change');
+                        $('#sayit .values-input[data-name="opt_say_six"][data-index="' + id_say + '"]').prop( "checked", true ).trigger('change');
+                        $('#sayit .values-input[data-name="opt_say_seven"][data-index="' + id_say + '"]').prop( "checked", true ).trigger('change');
+                        $('#sayit .values-input[data-name="opt_say_eigth"][data-index="' + id_say + '"]').prop( "checked", true ).trigger('change');
+                        $('#sayit .values-input[data-name="opt_say_nine"][data-index="' + id_say + '"]').prop( "checked", true ).trigger('change');
+                        $('#sayit .values-input[data-name="opt_say_nine_plus"][data-index="' + id_say + '"]').prop( "checked", true ).trigger('change');
+                        $('#sayit .values-input[data-name="opt_say_zero"][data-index="' + id_say + '"]').prop( "checked", true ).trigger('change');
+                    }
+                });
+            });
+      } else{
+        console.log('wrong table!');
+      }
+    });
+
+    $('#shorts .table-values-div .table-values .values-buttons[data-command="edit"]').on('click', function() {
+                let id = $(this).data('index');
+                initSelectId(function (sid) {
+                    sid.selectId('show', $('#shorts .values-input[data-name="name"][data-index="' + id + '"]').val(), (newId)=> {
+                        if (newId) {
+                            $('#shorts .values-input[data-name="name_id"][data-index="' + id + '"]').val(newId).trigger('change');
+                            socket.emit('getObject', newId, (err, obj)=> {
+                                let name = getName(obj);
+                                $('#shorts .values-input[data-name="name"][data-index="' + id + '"]').val(name).trigger('change');
+                            });
+                        }
+                    });
+                });
+            });
+
+      $('#shorts_in .table-values-div .table-values .values-buttons[data-command="edit"]').on('click', function() {
+                  let id = $(this).data('index');
+                  initSelectId(function (sid) {
+                      sid.selectId('show', $('#shorts_in .values-input[data-name="name"][data-index="' + id + '"]').val(), (newId)=> {
+                          if (newId) {
+                              $('#shorts_in .values-input[data-name="name_id"][data-index="' + id + '"]').val(newId).trigger('change');
+                              socket.emit('getObject', newId, (err, obj)=> {
+                                  let name = getName(obj);
+                                  $('#shorts_in .values-input[data-name="name"][data-index="' + id + '"]').val(name).trigger('change');
+                              });
+                          }
+                      });
+                  });
+              });
+
+}

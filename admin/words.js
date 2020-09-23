@@ -14,11 +14,11 @@ systemDictionary = {
 		"pl": "Ustawienia adaptera dla meldungsliste",
 		"zh-cn": "meldungsliste的适配器设置"
 	},
-   "PING adapter settings": {"en": "PING adapter settings", "de": "Listen Adapter-Einstellungen", 			"ru": "Настройки драйвера PING"},
-    "List settings":         {"en": "List settings",         "de": "Meldungslisten Einstellungen",         "ru": "Настройки PING"},
+   "PING adapter settings": {"en": "list adapter settings", "de": "Liste Adapter-Einstellungen", 			"ru": "Настройки драйвера PING"},
+    "List settings":         {"en": "Insert a DP in the Object ID area <br> In the Trigger area, a certain perception when the text should appear <br> enter the text that should be displayed under Message text",         "de": "Im Bereich Objekt-ID einen DP einfügen <br> Im Bereich Trigger eine Bedingung auswählen wann der text angezeigt werden soll <br> unter Meldetext den Text eintragen der angezeigt werden soll",         "ru": "Вставьте DP в область идентификатора объекта <br> В области триггера определенное восприятие, когда должен появиться текст <br> введите текст, который должен появиться в тексте сообщения"},
     "Ping addresses":        {"en": "IP addresses to ping",  "de": "Liste der Meldungen", 					 "ru": "Список IP адресов для мониторинга"},
     "Interval[ms]:":         {"en": "Ping interval[ms]",     "de": "Abfrage Interval [ms]",       			  "ru": "Интервал опроса[мс]:"},
-    "Room":                  {"en": "Room",                  "de": "Meldungstext",                   	    "ru": "Комната"},
+    "Room":                  {"en": "Message text",                  "de": "Meldungstext",                   	    "ru": "Текст сообщения"},
     "Name":                  {"en": "Name",                  "de": "Objekte",                     			  "ru": "Имя"},
     "IF Bedingung":            {"en": "IP Address",            "de": "IF Bedingung",               			  "ru": "IP Адрес"},
     "No host name in state name:": {
