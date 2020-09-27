@@ -76,24 +76,7 @@
 		"Date": false,
 		"time": false,
 		"shorts_in": [
-		  {
-			"name": "spiel_test_objekt",
-			"name_id": "0_userdata.0.spiel_test_objekt",
-			"if": "true",
-			"room": "zeile 1 meldung"
-		  },
-		  {
-			"name": "test wert",
-			"name_id": "0_userdata.0.test_wert",
-			"if": "true",
-			"room": ""
-		  },
-		  {
-			"name": "spiel_test_objekt",
-			"name_id": "0_userdata.0.spiel_test_objekt",
-			"if": "false",
-			"room": "wenn das dann doof"
-		  }
+		 
 		]
 	},
 	"objects": [],
