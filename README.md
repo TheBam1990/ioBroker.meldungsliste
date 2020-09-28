@@ -29,14 +29,14 @@ You are almost done, only a few steps left:
 	```
 1. Link your local repository with the one on GitHub:  
 	```bash
-	git remote add origin https://github.com/thebam/ioBroker.meldungsliste
+	git remote add origin https://github.com/thebam1990/ioBroker.meldungsliste
 	```
 
 1. Push all files to the GitHub repo:  
 	```bash
 	git push origin master
 	```
-1. Add a new secret under https://github.com/thebam/ioBroker.meldungsliste/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
+1. Add a new secret under https://github.com/thebam1990/ioBroker.meldungsliste/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
 
 1. Head over to [main.js](main.js) and start programming!
 
