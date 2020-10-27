@@ -1,6 +1,6 @@
 {
 	"common": {
-		"name": "meldungsliste",
+		"name": "Message-list",
 		"version": "0.0.1",
 		"news": {
 			"0.0.1": {
@@ -16,15 +16,15 @@
 				"zh-cn": "首次出版"
 			}
 		},
-		"title": "meldungsliste",
+		"title": "Message-list",
 		"titleLang": {
-			"en": "meldungsliste",
+			"en": "Message-list",
 			"de": "Meldungsliste",
-			"ru": "Meldungsliste",
-			"pt": "Meldungsliste",
+			"ru": "список-сообщений",
+			"pt": "lista-wiadomości",
 			"nl": "meldungsliste",
 			"fr": "meldungsliste",
-			"it": "meldungsliste",
+			"it": "elenco dei messaggi",
 			"es": "meldungsliste",
 			"pl": "meldungsliste",
 			"zh-cn": "融合"
