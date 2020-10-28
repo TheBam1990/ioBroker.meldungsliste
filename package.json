@@ -1,12 +1,12 @@
 {
-  "name": "iobroker.message-list",
+  "name": "iobroker.meldungsliste",
   "version": "0.0.1",
   "description": "servicemeldungen",
   "author": {
     "name": "thebam",
     "email": "elektrobam@gmx.de"
   },
-  "homepage": "https://github.com/thebam1990/ioBroker.meldungsliste",
+  "homepage": "https://github.com/thebam/ioBroker.meldungsliste",
   "license": "MIT",
   "keywords": [
     "ioBroker",
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/thebam1990/ioBroker.meldungsliste"
+    "url": "https://github.com/thebam/ioBroker.meldungsliste"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.4.0"
@@ -51,7 +51,7 @@
     "lint": "eslint"
   },
   "bugs": {
-    "url": "https://github.com/thebam1990/ioBroker.meldungsliste/issues"
+    "url": "https://github.com/thebam/ioBroker.meldungsliste/issues"
   },
   "readmeFilename": "README.md"
 }

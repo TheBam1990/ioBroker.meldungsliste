@@ -1,6 +1,6 @@
 {
 	"common": {
-		"name": "Message-list",
+		"name": "meldungsliste",
 		"version": "0.0.1",
 		"news": {
 			"0.0.1": {
@@ -16,15 +16,15 @@
 				"zh-cn": "首次出版"
 			}
 		},
-		"title": "Message-list",
+		"title": "meldungsliste",
 		"titleLang": {
-			"en": "Message-list",
+			"en": "meldungsliste",
 			"de": "Meldungsliste",
-			"ru": "список-сообщений",
-			"pt": "lista-wiadomości",
+			"ru": "Meldungsliste",
+			"pt": "Meldungsliste",
 			"nl": "meldungsliste",
 			"fr": "meldungsliste",
-			"it": "elenco dei messaggi",
+			"it": "meldungsliste",
 			"es": "meldungsliste",
 			"pl": "meldungsliste",
 			"zh-cn": "融合"
@@ -54,8 +54,8 @@
 		"main": "main.js",
 		"icon": "meldungsliste.png",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/thebam1990/ioBroker.meldungsliste/master/admin/meldungsliste.png",
-		"readme": "https://github.com/thebam1990/ioBroker.meldungsliste/blob/master/README.md",
+		"extIcon": "https://raw.githubusercontent.com/thebam/ioBroker.meldungsliste/master/admin/meldungsliste.png",
+		"readme": "https://github.com/thebam/ioBroker.meldungsliste/blob/master/README.md",
 		"loglevel": "info",
 		"mode": "daemon",
 		"type": "logic",
@@ -76,6 +76,24 @@
 		"Date": false,
 		"time": false,
 		"shorts_in": [
+		  {
+			"name": "spiel_test_objekt",
+			"name_id": "0_userdata.0.spiel_test_objekt",
+			"if": "true",
+			"room": "zeile 1 meldung"
+		  },
+		  {
+			"name": "test wert",
+			"name_id": "0_userdata.0.test_wert",
+			"if": "true",
+			"room": ""
+		  },
+		  {
+			"name": "spiel_test_objekt",
+			"name_id": "0_userdata.0.spiel_test_objekt",
+			"if": "false",
+			"room": "wenn das dann doof"
+		  }
 		]
 	},
 	"objects": [],
