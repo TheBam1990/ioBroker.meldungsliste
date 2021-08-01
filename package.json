@@ -19,7 +19,7 @@
     "url": "https://github.com/thebam/ioBroker.meldungsliste"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.4.0"
+    "@iobroker/adapter-core": "^2.5.1"
   },
   "devDependencies": {
     "@iobroker/testing": "^2.3.0",
