@@ -30,7 +30,7 @@ Es soll helfen Startseiten übersichtlicher zu machen da man nicht sehr viele ei
 ## License
 MIT License
 
-Copyright (c) 2020 thebam <elektrobam@gmx.de>
+Copyright (c) 2022 thebam <elektrobam@gmx.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
